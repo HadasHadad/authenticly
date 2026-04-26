@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUTHENTICLY | Real or AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AUTHENTICLY | Real or AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  
 </head>
 <body>
-
+  
     <nav class="navbar">
         <ul class="nav-links">
             <li><a href="#">דף הבית</a></li>
@@ -50,11 +51,275 @@
         <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
     </footer>
 
-</body>
-</html>, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+  <!-- <div class="wrap">
+    <div class="hero-bar">
+      <div>
+        <div class="logo">AI<span>or</span>Not?</div>
+        <div class="tagline">Rate media — human or machine</div>
+      </div>
+      <a class="hero-btn" href="https://google.com/search?q=how+to+detect+AI+generated+images" target="_blank">איך לזהות AI?</a>
+    </div>
+
+    <div class="stats-row" id="globalStats"></div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">הכל</button>
+      <button class="filter-btn" data-filter="image" onclick="setFilter('image', this)">תמונות</button>
+      <button class="filter-btn" data-filter="video" onclick="setFilter('video', this)">סרטונים</button>
+      <button class="filter-btn" data-filter="voted" onclick="setFilter('voted', this)">הצבעתי</button>
+      <div class="sort-wrap">
+        <span class="sort-label">מיון:</span>
+        <select class="sort-select" onchange="setSort(this.value)">
+          <option value="popular">פופולרי</option>
+          <option value="controversial">שנוי במחלוקת</option>
+          <option value="recent">חדש</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid" id="mediaGrid"></div>
+
+    <div class="dist-section">
+      <div class="section-title">התפלגות הצבעות</div>
+      <div class="dist-bars" id="distBars"></div>
+      <div class="chart-wrap">
+        <canvas id="confChart" role="img" aria-label="Distribution of AI confidence scores across all media items">
+          Bar chart showing how items are distributed across AI confidence levels.
+        </canvas>
+      </div>
+    </div>
+  </div> -->
+
+  <script>
+    const ITEMS = [
+      { id: 1, title: "שקיעה בים",       type: "image", src: "https://picsum.photos/seed/ai1/400/225",    ai: 342, human: 58,  tag: "landscape" },
+      { id: 2, title: "ריקוד ברחוב",     type: "video", src: "https://picsum.photos/seed/vid2/400/225",   ai: 88,  human: 271, tag: "people" },
+      { id: 3, title: "עיר עתידנית",     type: "image", src: "https://picsum.photos/seed/city3/400/225",  ai: 290, human: 110, tag: "architecture" },
+      { id: 4, title: "חתול מגרד",       type: "video", src: "https://picsum.photos/seed/cat4/400/225",   ai: 44,  human: 389, tag: "animals" },
+      { id: 5, title: "פרח קסום",        type: "image", src: "https://picsum.photos/seed/flow5/400/225",  ai: 201, human: 199, tag: "nature" },
+      { id: 6, title: "ריצה על הירח",    type: "video", src: "https://picsum.photos/seed/moon6/400/225",  ai: 410, human: 30,  tag: "sci-fi" },
+      { id: 7, title: "שוק פריז",        type: "image", src: "https://picsum.photos/seed/paris7/400/225", ai: 65,  human: 318, tag: "travel" },
+      { id: 8, title: "רובוט מבשל",      type: "video", src: "https://picsum.photos/seed/robot8/400/225", ai: 375, human: 45,  tag: "tech" },
+      { id: 9, title: "ילדים משחקים",   type: "image", src: "https://picsum.photos/seed/kids9/400/225",  ai: 55,  human: 290, tag: "people" },
+    ];
+
+    let votes = {};
+    try { votes = JSON.parse(localStorage.getItem('aion_votes') || '{}'); } catch(e) {}
+
+    let filter = 'all';
+    let sortMode = 'popular';
+    let confChartInstance = null;
+
+    function saveVotes() {
+      try { localStorage.setItem('aion_votes', JSON.stringify(votes)); } catch(e) {}
+    }
+
+    function vote(id, type) {
+      const item = ITEMS.find(i => i.id === id);
+      if (!item) return;
+      const prev = votes[id];
+      if (prev) item[prev]--;
+      if (prev === type) {
+        delete votes[id];
+      } else {
+        votes[id] = type;
+        item[type]++;
+      }
+      saveVotes();
+      render();
+      renderStats();
+      renderDist();
+    }
+
+    function getVerdict(item) {
+      const total = item.ai + item.human;
+      if (total < 10) return null;
+      const pct = item.ai / total;
+      if (pct > 0.65) return 'ai';
+      if (pct < 0.35) return 'human';
+      return 'split';
+    }
+
+    function getFiltered() {
+      let arr = [...ITEMS];
+      if (filter === 'image') arr = arr.filter(i => i.type === 'image');
+      if (filter === 'video') arr = arr.filter(i => i.type === 'video');
+      if (filter === 'voted') arr = arr.filter(i => votes[i.id]);
+      if (sortMode === 'popular')
+        arr.sort((a, b) => (b.ai + b.human) - (a.ai + a.human));
+      if (sortMode === 'controversial')
+        arr.sort((a, b) => {
+          const ra = Math.min(a.ai, a.human) / ((a.ai + a.human) || 1);
+          const rb = Math.min(b.ai, b.human) / ((b.ai + b.human) || 1);
+          return rb - ra;
+        });
+      return arr;
+    }
+
+    function render() {
+      const grid = document.getElementById('mediaGrid');
+      const items = getFiltered();
+
+      if (!items.length) {
+        grid.innerHTML = '<div class="empty">אין פריטים להצגה</div>';
+        return;
+      }
+
+      grid.innerHTML = items.map(item => {
+        const total = item.ai + item.human;
+        const aiPct = total ? Math.round(item.ai / total * 100) : 50;
+        const humanPct = 100 - aiPct;
+        const myVote = votes[item.id];
+        const verdict = getVerdict(item);
+
+        const verdictHTML = verdict
+          ? `<div class="verdict-tag verdict-${verdict}">${verdict === 'ai' ? 'AI' : verdict === 'human' ? 'אנושי' : 'שנוי'}</div>`
+          : '';
+
+        const playHTML = item.type === 'video'
+          ? `<div class="play-icon"><div class="play-circle">
+               <svg width="12" height="14" viewBox="0 0 12 14" fill="white"><polygon points="1,1 11,7 1,13"/></svg>
+             </div></div>`
+          : '';
+
+        return `
+          <div class="card${myVote ? ' voted-' + myVote : ''}" id="card-${item.id}">
+            <div class="thumb-wrap">
+              <img class="thumb" src="${item.src}" alt="${item.title}" loading="lazy" />
+              <div class="media-type-badge badge-${item.type}">${item.type === 'video' ? 'video' : 'image'}</div>
+              ${playHTML}
+              ${verdictHTML}
+            </div>
+            <div class="card-body">
+              <div class="card-title">${item.title}</div>
+              <div class="card-meta">${total.toLocaleString()} הצבעות · #${item.tag}</div>
+              <div class="vote-bar">
+                <div class="vote-bar-ai" style="width:${aiPct}%"></div>
+                <div class="vote-bar-human" style="width:${humanPct}%"></div>
+              </div>
+              <div class="vote-counts">
+                <span class="ai-count">AI ${aiPct}%</span>
+                <span class="total-c">${total}</span>
+                <span class="human-count">${humanPct}% אנושי</span>
+              </div>
+              <div class="vote-btns">
+                <button class="vote-btn vote-btn-ai${myVote === 'ai' ? ' selected' : ''}" onclick="vote(${item.id}, 'ai')">AI</button>
+                <button class="vote-btn vote-btn-human${myVote === 'human' ? ' selected' : ''}" onclick="vote(${item.id}, 'human')">אנושי</button>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderStats() {
+      const totalVotes = Object.keys(votes).length;
+      const aiVotes = Object.values(votes).filter(v => v === 'ai').length;
+      const humanVotes = totalVotes - aiVotes;
+      const totalRatings = ITEMS.reduce((s, i) => s + i.ai + i.human, 0);
+      const aiPct = totalRatings
+        ? Math.round(ITEMS.reduce((s, i) => s + i.ai, 0) / totalRatings * 100)
+        : 0;
+
+      document.getElementById('globalStats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">סה"כ דירוגים</div>
+          <div class="stat-val total">${totalRatings.toLocaleString()}</div>
+          <div class="stat-sub">על ${ITEMS.length} פריטים</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">הצבעות AI</div>
+          <div class="stat-val ai">${aiPct}%</div>
+          <div class="stat-sub">מדרגים כ-AI</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">הצבעתי</div>
+          <div class="stat-val total">${totalVotes}</div>
+          <div class="stat-sub">${aiVotes} AI · ${humanVotes} אנושי</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">שנויים במח'</div>
+          <div class="stat-val pct">${ITEMS.filter(i => getVerdict(i) === 'split').length}</div>
+          <div class="stat-sub">50/50 splits</div>
+        </div>`;
+    }
+
+    function renderDist() {
+      const labels  = ['בטוח אנושי', 'כנראה אנושי', 'לא ברור', 'כנראה AI', 'בטוח AI'];
+      const colors  = ['#1D9E75', '#5DCAA5', '#FAC775', '#F09595', '#E24B4A'];
+      const counts  = [0, 0, 0, 0, 0];
+
+      ITEMS.forEach(item => {
+        const t = item.ai + item.human;
+        if (!t) return;
+        const p = item.ai / t;
+        const idx = Math.min(4, Math.floor(p / 0.2));
+        counts[idx]++;
+      });
+
+      const max = Math.max(...counts) || 1;
+
+      document.getElementById('distBars').innerHTML = counts.map((c, i) => `
+        <div class="dist-row">
+          <div class="dist-label">${labels[i]}</div>
+          <div class="dist-track">
+            <div class="dist-fill" style="width:${Math.round(c / max * 100)}%; background:${colors[i]}"></div>
+          </div>
+          <div class="dist-pct" style="color:${colors[i]}">${c}</div>
+        </div>`).join('');
+
+      const ctx = document.getElementById('confChart');
+      if (confChartInstance) { confChartInstance.destroy(); confChartInstance = null; }
+      confChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['0-20%', '20-40%', '40-60%', '60-80%', '80-100%'],
+          datasets: [{
+            label: 'מספר פריטים',
+            data: counts,
+            backgroundColor: colors,
+            borderRadius: 4,
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => `${ctx.raw} פריטים` } }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: { color: '#888', font: { family: 'Space Mono', size: 10 } }
+            },
+            y: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: { color: '#888', font: { family: 'Space Mono', size: 10 }, stepSize: 1 }
+            }
+          }
+        }
+      });
+    }
+
+    function setFilter(f, btn) {
+      filter = f;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    }
+
+    function setSort(s) { sortMode = s; render(); }
+
+    // init
+    render();
+    renderStats();
+    renderDist();
+  </script>
 </body>
 </html>
+
+
+
+
+
