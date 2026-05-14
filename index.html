@@ -319,7 +319,329 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTHENTICLY | Real or AI Quiz</title>
+    
+    <!-- פונטים -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&family=Assistant:wght@300;400;700&display=swap" rel="stylesheet" />
 
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --accent: #ffb400;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --ai-color: #e24b4a;
+            --human-color: #1d9e75;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #222;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .main-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 4px;
+        }
+
+        .amber-line {
+            width: 50px;
+            height: 4px;
+            background: var(--accent);
+            margin: 15px auto;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .carousel-wrapper {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #222;
+            text-align: center;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #000;
+        }
+
+        .test-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            border: 1px solid var(--accent);
+        }
+
+        /* Buttons */
+        .vote-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            min-width: 160px;
+        }
+
+        .btn-real { background: var(--human-color); color: white; }
+        .btn-ai { background: var(--ai-color); color: white; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+        /* Results Table */
+        #results-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .results-table th {
+            text-align: right;
+            border-bottom: 2px solid var(--accent);
+            padding: 10px;
+            color: var(--text-dim);
+        }
+
+        .results-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #222;
+        }
+
+        .thumb-res {
+            width: 80px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge-ai { background: rgba(226, 75, 74, 0.2); color: var(--ai-color); }
+        .badge-human { background: rgba(29, 158, 117, 0.2); color: var(--human-color); }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#">דף הבית</a></li>
+            <li><a href="#">אודות</a></li>
+            <li><a href="#">דירוג</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1 class="main-title">AUTHENTICLY</h1>
+        <div class="amber-line"></div>
+        <p class="subtitle">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+    </header>
+
+    <main class="main-content">
+        <!-- שלב השאלון -->
+        <section id="quiz-section" class="carousel-wrapper">
+            <div class="image-container">
+                <img src="" alt="Reality Test" id="quiz-image" class="test-image">
+                <div class="overlay-text">
+                    <span id="step-counter">טוען...</span>
+                </div>
+            </div>
+
+            <div class="vote-actions">
+                <button class="btn btn-real" onclick="handleVote('human')">אנושי</button>
+                <button class="btn btn-ai" onclick="handleVote('ai')">AI</button>
+            </div>
+        </section>
+
+        <!-- שלב התוצאות (מוסתר) -->
+        <section id="results-section" style="display: none;">
+            <h2 style="font-family: 'Syne'; text-align: center;">סיכום בדיקה: חכמת ההמונים</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>מדיה</th>
+                        <th>הבחירה שלך</th>
+                        <th>מה הרוב חשבו?</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body">
+                    <!-- יישלח לכאן ע"י JS -->
+                </tbody>
+            </table>
+            <button class="btn" style="background: var(--accent); margin: 30px auto; display: block;" onclick="location.reload()">בדיקה חוזרת</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
+    </footer>
+
+    <script>
+        // שלב 1: הנתונים
+        const quizData = [
+            { url: "https://pickture.co.il/wp-content/uploads/2023/02/%D7%AA%D7%9E%D7%95%D7%A0%D7%95%D7%AA-%D7%A8%D7%A7%D7%A2-%D7%A9%D7%9C-%D7%99%D7%9D-%D7%95%D7%A9%D7%A7%D7%99%D7%A2%D7%94-%D7%90%D7%93%D7%95%D7%9E%D7%94.png", realVotes: 45, aiVotes: 120 },
+            { url: "https://pickture.co.il/wp-content/uploads/2023/04/%D7%A9%D7%A7%D7%99%D7%A2%D7%AA-%D7%A9%D7%9E%D7%A9-35.jpg", realVotes: 200, aiVotes: 30 },
+            { url: "https://www.yo-yoo.co.il/coolpics/images/uploads/d584d9.jpg", realVotes: 50, aiVotes: 150 },
+            { url: "https://www.yo-yoo.co.il/coolpics/images/uploads/d4b00d.jpg", realVotes: 180, aiVotes: 40 },
+            { url: "https://pickture.co.il/wp-content/uploads/2023/05/%D7%A8%D7%A7%D7%A2-%D7%99%D7%A4%D7%94-%D7%9C%D7%94%D7%95%D7%A8%D7%93%D7%94-%D7%97%D7%99%D7%A0%D7%9D-13.jpg", realVotes: 20, aiVotes: 190 }
+        ];
+
+        let currentIndex = 0;
+        let userVotes = [];
+
+        // שלב 2: לוגיקת המעבר
+        function updateImage() {
+            if (currentIndex < quizData.length) {
+                const currentItem = quizData[currentIndex];
+                const imgElement = document.getElementById('quiz-image');
+                
+                // אפקט מעבר פשוט
+                imgElement.style.opacity = 0;
+                setTimeout(() => {
+                    imgElement.src = currentItem.url;
+                    imgElement.style.opacity = 1;
+                    document.getElementById('step-counter').innerText = `בדיקה מס' 0${currentIndex + 1}`;
+                }, 200);
+            } else {
+                showResults();
+            }
+        }
+
+        // שלב 3: האזנה ללחיצות
+        function handleVote(type) {
+            userVotes.push(type);
+            currentIndex++;
+            updateImage();
+        }
+
+        // שלב 4: חשיפת התוצאות
+        function showResults() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+            
+            const tbody = document.getElementById('results-body');
+            tbody.innerHTML = '';
+
+            quizData.forEach((item, index) => {
+                const total = item.realVotes + item.aiVotes;
+                const aiPct = Math.round((item.aiVotes / total) * 100);
+                const userChoice = userVotes[index] === 'ai' ? 'AI' : 'אנושי';
+                const userClass = userVotes[index] === 'ai' ? 'badge-ai' : 'badge-human';
+
+                const row = `
+                    <tr>
+                        <td><img src="${item.url}" class="thumb-res"></td>
+                        <td><span class="badge ${userClass}">${userChoice}</span></td>
+                        <td>
+                            <div style="font-weight: bold;">${aiPct}% חשבו שזה AI</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim);">${total} הצבעות במערכת</div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // אתחול ראשוני
+        window.onload = updateImage;
+    </script>
+</body>
+</html>
 
 
 
