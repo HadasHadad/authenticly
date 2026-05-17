@@ -6,6 +6,26 @@
 <link rel="stylesheet" href="style.css">
 <title>אודות</title>
 
+<style>
+    .media-container {
+        position: relative;
+        cursor: pointer;
+    }
+    .media-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 8px;
+    }
+    .media-container:hover video {
+        opacity: 1;
+    }
+</style>
 
 </head>
 
@@ -13,59 +33,75 @@
 
 <div class="container">
 
-    <!-- כותרת -->
     <div class="hero">
-        <h1>קצת עלינו</h1>
-        <p>אנחנו יוצרים חוויות, לא רק שירותים</p>
+        <h1>אודות הפרוייקט שלנו</h1>
+        <p>מזהים מניפולציות ומחזירים את האמון למציאות הדיגיטלית</p>
     </div>
 
-    <!-- סיפור -->
     <div class="section">
-        <img src="https://via.placeholder.com/500x350" alt="">
+        <div class="media-container">
+            <img src="./images/yaelnotAI.jpeg" alt="ציור אנושי מקורי">
+            <video src="./images/yaelnotAI.mp4" loop muted playsinline></video>
+        </div>
         <div class="card">
-            <h2>הסיפור שלנו</h2>
+            <h2>היצירה האנושית והסיפור שלנו</h2>
             <p>
-                הכל התחיל מרעיון פשוט – להביא משהו אחר, מדויק ואיכותי יותר.
-                עם הזמן זה הפך לעסק שמלווה לקוחות ויוצר עבורם ערך אמיתי.
+                הכל התחיל מרעיון פשוט בעידן שבו בינה מלאכותית (AI) מייצרת מדיה מזויפת בקלות, הגולשים חווים אובדן שליטה ובלבול. הפרויקט שלנו נולד מתוך רצון להגן על המרחב הדיגיטלי ולהעניק למשתמשים כלים שיעזרו להם לדעת מה באמת נכון.
             </p>
         </div>
     </div>
 
-    <!-- מה אנחנו עושים -->
     <div class="section">
         <div class="card">
-            <h2>מה אנחנו עושים</h2>
+            <h2>טכנולוגיית ה-AI והפתרון שלנו</h2>
             <p>
-                אנחנו מספקים פתרונות יצירתיים בהתאמה אישית, תוך דגש על איכות,
-                שירות וחוויית לקוח ברמה הגבוהה ביותר.
+                אנחנו מפתחים תוסף דפדפן חברתי המבוסס על חוכמת המונים. המערכת מאפשרת למעגלי חברים קרובים לאמת תוכן ויזואלי ותמונות באתרי החדשות בזמן אמת, ולהציג מדדי אמינות מדויקים שימנעו הטיות והטעיות.
             </p>
         </div>
-        <img src="https://via.placeholder.com/500x350" alt="">
+        <div class="media-container">
+            <img src="./images/IAart.jpeg" alt="ציור שנוצר על ידי AI">
+            <video src="./images/IAart.mp4" loop muted playsinline></video>
+        </div>
     </div>
 
-    <!-- ערכים -->
     <div class="values">
         <div class="value">
             <h3>מקצועיות</h3>
-            <p>דיוק, ניסיון ותשומת לב לפרטים הקטנים</p>
+            <p>דיוק, ניסיון ותשומת לב לפרטים הקטנים של האלגוריתם.</p>
         </div>
         <div class="value">
             <h3>אמינות</h3>
-            <p>שקיפות מלאה ויחס אישי לכל לקוח</p>
+            <p>שקיפות מלאה בעזרת מדד ה-Confidence Level שמגיע מהשרת.</p>
         </div>
         <div class="value">
-            <h3>יצירתיות</h3>
-            <p>חשיבה מחוץ לקופסה ופתרונות ייחודיים</p>
+            <h3>האימפקט</h3>
+            <p>מחזירים את השליטה לגולשים כמו מיה, ומאפשרים לגלוש ברשת בביטחון.</p>
         </div>
     </div>
 
-    <!-- CTA -->
     <div class="cta">
-        <h2>רוצים לעבוד איתנו?</h2>
+        <h2>רוצים לקחת חלק בשינוי?</h2>
         <button>צור קשר</button>
     </div>
 
 </div>
+
+<script>
+    const containers = document.querySelectorAll('.media-container');
+
+    containers.forEach(container => {
+        const video = container.querySelector('video');
+
+        container.addEventListener('mouseenter', () => {
+            video.play().catch(error => console.log(error));
+        });
+
+        container.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0;
+        });
+    });
+</script>
 
 </body>
 </html>
