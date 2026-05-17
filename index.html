@@ -1,369 +1,57 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI or Not?</title>
+<title>AUTHENTICLY | Real or AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ai: #E24B4A;
-      --human: #1D9E75;
-      --unknown: #888780;
-      --bg: #0a0a0a;
-      --surface: #111;
-      --card: #181818;
-      --border: rgba(255,255,255,0.08);
-      --text: #f0ede8;
-      --muted: #888;
-    }
-
-    html, body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-    }
-
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 3rem;
-    }
-
-    /* HERO BAR */
-    .hero-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.8rem 0 1.2rem;
-      border-bottom: 0.5px solid var(--border);
-      margin-bottom: 1.5rem;
-    }
-    .logo { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-    .logo span { color: var(--ai); }
-    .tagline {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-    .hero-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: 0.5px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .hero-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
-
-    /* STATS ROW */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 1.5rem;
-    }
-    .stat-card {
-      background: var(--card);
-      border: 0.5px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-    }
-    .stat-val {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-    .stat-val.ai { color: var(--ai); }
-    .stat-val.human { color: var(--human); }
-    .stat-val.total { color: var(--text); }
-    .stat-val.pct { color: #FAC775; }
-    .stat-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-      font-family: 'Space Mono', monospace;
-    }
-
-    /* FILTERS */
-    .filters {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 1.2rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .filter-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      padding: 6px 14px;
-      border-radius: 6px;
-      border: 0.5px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: all 0.15s;
-    }
-    .filter-btn.active { background: var(--text); color: #000; border-color: transparent; }
-    .filter-btn:hover:not(.active) { color: var(--text); border-color: rgba(255,255,255,0.2); }
-    .sort-wrap {
-      margin-right: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .sort-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-    }
-    .sort-select {
-      background: var(--card);
-      color: var(--muted);
-      border: 0.5px solid var(--border);
-      border-radius: 6px;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      padding: 5px 10px;
-      cursor: pointer;
-      outline: none;
-    }
-    .sort-select:hover { color: var(--text); }
-
-    /* GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 780px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
-
-    /* CARDS */
-    .card {
-      background: var(--card);
-      border: 0.5px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: default;
-      transition: transform 0.15s, border-color 0.15s;
-      position: relative;
-    }
-    .card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.18); }
-    .card.voted-ai { border-color: rgba(226,75,74,0.5); }
-    .card.voted-human { border-color: rgba(29,158,117,0.5); }
-
-    .thumb-wrap { position: relative; }
-    .thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      display: block;
-      background: #1a1a1a;
-    }
-    .media-type-badge {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      padding: 3px 7px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 700;
-    }
-    .badge-video { background: #E24B4A; color: #fff; }
-    .badge-image { background: #185FA5; color: #fff; }
-
-    .play-icon {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    .play-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .verdict-tag {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .verdict-ai { background: rgba(226,75,74,0.9); color: #fff; }
-    .verdict-human { background: rgba(29,158,117,0.9); color: #fff; }
-    .verdict-split { background: rgba(250,199,117,0.9); color: #000; }
-
-    .card-body { padding: 10px 12px 12px; }
-    .card-title {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .card-meta {
-      font-size: 10px;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 10px;
-    }
-
-    .vote-bar {
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-      display: flex;
-      margin-bottom: 4px;
-    }
-    .vote-bar-ai { background: var(--ai); height: 100%; transition: width 0.4s; }
-    .vote-bar-human { background: var(--human); height: 100%; transition: width 0.4s; }
-    .vote-counts {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 10px;
-    }
-    .ai-count { color: var(--ai); }
-    .human-count { color: var(--human); }
-    .total-c { color: var(--muted); }
-
-    .vote-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .vote-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      padding: 7px 4px;
-      border-radius: 6px;
-      border: 0.5px solid;
-      cursor: pointer;
-      text-align: center;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      transition: all 0.15s;
-      font-weight: 700;
-    }
-    .vote-btn-ai {
-      border-color: rgba(226,75,74,0.4);
-      background: rgba(226,75,74,0.07);
-      color: var(--ai);
-    }
-    .vote-btn-ai:hover, .vote-btn-ai.selected {
-      background: var(--ai);
-      color: #fff;
-      border-color: var(--ai);
-    }
-    .vote-btn-human {
-      border-color: rgba(29,158,117,0.4);
-      background: rgba(29,158,117,0.07);
-      color: var(--human);
-    }
-    .vote-btn-human:hover, .vote-btn-human.selected {
-      background: var(--human);
-      color: #fff;
-      border-color: var(--human);
-    }
-
-    /* DISTRIBUTION SECTION */
-    .dist-section {
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 0.5px solid var(--border);
-    }
-    .section-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 1rem;
-    }
-    .dist-bars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
-    .dist-row { display: flex; align-items: center; gap: 10px; }
-    .dist-label {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      color: var(--muted);
-      width: 90px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .dist-track {
-      flex: 1;
-      height: 6px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .dist-fill { height: 100%; border-radius: 3px; transition: width 0.6s; }
-    .dist-pct {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      width: 24px;
-      flex-shrink: 0;
-    }
-
-    .chart-wrap { position: relative; height: 200px; margin-top: 1rem; }
-
-    /* EMPTY STATE */
-    .empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 3rem;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-    }
-  </style>
+  
 </head>
 <body>
-  <div class="wrap">
+  
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#">דף הבית</a></li>
+            <li><a href="#">אודות</a></li>
+            <li><a href="#">דירוג</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="main-title">AUTHENTICLY</h1>
+            <div class="amber-line"></div>
+            <p class="subtitle">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="carousel-wrapper">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000" alt="Reality Test" class="test-image">
+                
+                <div class="overlay-text">
+                    <span>בדיקה מס' 01</span>
+                </div>
+            </div>
+
+            <div class="vote-actions">
+                <button class="btn btn-real">אנושי</button>
+                <button class="btn btn-ai">AI</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
+    </footer>
+
+  <!-- <div class="wrap">
     <div class="hero-bar">
       <div>
         <div class="logo">AI<span>or</span>Not?</div>
@@ -400,7 +88,7 @@
         </canvas>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <script>
     const ITEMS = [
@@ -630,4 +318,8 @@
   </script>
 </body>
 </html>
-שדגכעיחלךףךלחיעכגדש'גכעיחלךף,ףךלחיעכגדשגכעיחל
+
+
+
+
+
