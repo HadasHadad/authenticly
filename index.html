@@ -106,12 +106,13 @@
     }
 
     .main-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 4.8rem;
-        font-weight: 600;
-        color: var(--burgundy);
-        letter-spacing: 8px;
-        margin-bottom: 15px;
+       font-family: 'Playfair Display', serif;
+    font-size: 4.8rem;
+    font-weight: 600;
+    color: var(--burgundy);
+    letter-spacing: 18px;
+    margin-bottom: -14px;
+    margin-top: -65px;
     }
 
     .amber-line {
@@ -186,35 +187,6 @@
         z-index: 5;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-
-    /* חיצי מעבר מינימליסטיים ויוקרתיים */
-    .nav-arrow {
-        position: absolute;
-        top: 45%;
-        transform: translateY(-50%);
-        background-color: var(--white);
-        color: var(--burgundy);
-        border: 1px solid rgba(192, 171, 154, 0.3);
-        width: 54px;
-        height: 54px;
-        border-radius: 50%;
-        font-size: 20px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition-smooth);
-        z-index: 10;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-    .nav-arrow:hover {
-        background-color: var(--burgundy);
-        color: var(--white);
-        border-color: var(--burgundy);
-        box-shadow: 0 8px 25px rgba(74, 4, 4, 0.2);
-    }
-    .nav-arrow.prev { right: -30px; }
-    .nav-arrow.next { left: -30px; }
 
     /* --- כפתורי הצבעה מעוצבים מחדש --- */
     .vote-actions {
@@ -316,8 +288,6 @@
     /* התאמות רספונסיביות למובייל */
     @media (max-width: 820px) {
         .main-title { font-size: 3.2rem; letter-spacing: 4px; }
-        .nav-arrow.prev { right: 20px; }
-        .nav-arrow.next { left: 20px; }
         .image-container { height: 380px; }
         .nav-links { gap: 30px; }
     }
@@ -336,17 +306,16 @@
 
     <!-- כותרת ראשית -->
     <header class="hero">
-        <h1 class="main-title">AUTHENTICLY</h1>
+        <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
         <div class="amber-line"></div>
-        <p class="subtitle">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+        <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
     </header>
 
     <!-- קרוסלה ותוכן מרכזי -->
     <main class="main-content">
         <section class="carousel-wrapper">
-            <button class="nav-arrow prev" onclick="navigateCarousel(1)">&#10095;</button>
-            <button class="nav-arrow next" onclick="navigateCarousel(-1)">&#10094;</button>
 
+            <!-- אזור התמונה נשאר זהה לחלוטין בעיצובו -->
             <div class="image-container">
                 <img src="" alt="Reality Test" id="displayImage" class="test-image">
                 <div class="overlay-text">
@@ -354,11 +323,13 @@
                 </div>
             </div>
 
-            <div class="vote-actions">
-                <button id="btnReal" class="btn btn-real" onclick="submitVote('human')">אנושי</button>
-                <button id="btnAI" class="btn btn-ai" onclick="submitVote('ai')">AI</button>
+            <!-- כפתורי ההצבעה המקוריים שלך -->
+            <div class="vote-actions" id="voteActionsBlock">
+                <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
+                <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
             </div>
 
+            <!-- מד אחוזי ההצבעה משמש כעת להצגת הסטטיסטיקה והתוצאה בסיום -->
             <div class="results-container">
                 <div class="progress-bar">
                     <div id="barHuman" class="fill-human" style="width: 50%"></div>
@@ -379,21 +350,17 @@
     </footer>
 
   <script>
-    // מערך הנתונים של התמונות (נשאר זהה לקוד המקורי שלך)
+    // מערך הנתונים המקורי שלך - התווסף לו רק שדה הגדרת התשובה הנכונה (correct)
     const ITEMS = [
-      { id: 1, title: "בדיקה מס' 01", src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000", ai: 120, human: 340 },
-      { id: 2, title: "בדיקה מס' 02", src: "https://picsum.photos/seed/city3/600/400",  ai: 290, human: 110 },
-      { id: 3, title: "בדיקה מס' 03", src: "https://picsum.photos/seed/flow5/600/400",  ai: 201, human: 199 },
-      { id: 4, title: "בדיקה מס' 04", src: "https://picsum.photos/seed/moon6/600/400",  ai: 410, human: 30  },
-      { id: 5, title: "בדיקה מס' 05", src: "https://picsum.photos/seed/robot8/600/400", ai: 375, human: 45  }
+      { id: 1, title: "בדיקה מס' 01", src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000", correct: "human" },
+      { id: 2, title: "בדיקה מס' 02", src: "https://picsum.photos/seed/city3/600/400",  correct: "ai" },
+      { id: 3, title: "בדיקה מס' 03", src: "https://picsum.photos/seed/flow5/600/400",  correct: "human" },
+      { id: 4, title: "בדיקה מס' 04", src: "https://picsum.photos/seed/moon6/600/400",  correct: "ai" },
+      { id: 5, title: "בדיקה מס' 05", src: "https://picsum.photos/seed/robot8/600/400", correct: "ai" }
     ];
 
-    let userVotes = {};
     let currentIndex = 0;
-
-    try { 
-      userVotes = JSON.parse(localStorage.getItem('authenticly_user_votes') || '{}'); 
-    } catch(e) { userVotes = {}; }
+    let correctAnswersCount = 0;
 
     function drawSlide() {
       const activeItem = ITEMS[currentIndex];
@@ -401,58 +368,75 @@
       document.getElementById('displayImage').src = activeItem.src;
       document.getElementById('displayTitle').innerText = activeItem.title;
 
-      const totalVotes = activeItem.ai + activeItem.human;
-      const humanPercent = totalVotes ? Math.round((activeItem.human / totalVotes) * 100) : 50;
-      const aiPercent = 100 - humanPercent;
+      // עדכון המד התחתון שיראה את התקדמות השאלות (לדוגמה: תמונה 1 מתוך 5)
+      const currentNumber = currentIndex + 1;
+      const progressPercent = Math.round((currentNumber / ITEMS.length) * 100);
+      
+      document.getElementById('barHuman').style.width = `${progressPercent}%`;
+      document.getElementById('barAI').style.width = `${100 - progressPercent}%`;
 
-      document.getElementById('barHuman').style.width = `${humanPercent}%`;
-      document.getElementById('barAI').style.width = `${aiPercent}%`;
-
-      document.getElementById('labelHuman').innerText = `אנושי: ${humanPercent}%`;
-      document.getElementById('labelAI').innerText = `AI: ${aiPercent}%`;
-      document.getElementById('labelTotal').innerHTML = `סה"כ דירוגים: <strong>${totalVotes.toLocaleString()}</strong>`;
-
-      document.getElementById('btnReal').classList.remove('active-choice');
-      document.getElementById('btnAI').classList.remove('active-choice');
-
-      const pastVote = userVotes[activeItem.id];
-      if (pastVote === 'human') {
-        document.getElementById('btnReal').classList.add('active-choice');
-      } else if (pastVote === 'ai') {
-        document.getElementById('btnAI').classList.add('active-choice');
-      }
+      document.getElementById('labelHuman').innerText = `שאלה ${currentNumber}`;
+      document.getElementById('labelAI').innerText = `מתוך ${ITEMS.length}`;
+      document.getElementById('labelTotal').innerHTML = `שלב המשחק`;
     }
 
-    function navigateCarousel(direction) {
-      currentIndex += direction;
-      
-      if (currentIndex >= ITEMS.length) currentIndex = 0;
-      if (currentIndex < 0) currentIndex = ITEMS.length - 1;
-      
-      drawSlide();
-    }
-
-    function submitVote(type) {
+    function submitGameVote(type) {
       const activeItem = ITEMS[currentIndex];
-      const existingVote = userVotes[activeItem.id];
 
-      if (existingVote) {
-        activeItem[existingVote]--;
-        if (existingVote === type) {
-          delete userVotes[activeItem.id];
-        } else {
-          userVotes[activeItem.id] = type;
-          activeItem[type]++;
-        }
-      } else {
-        userVotes[activeItem.id] = type;
-        activeItem[type]++;
+      // בדיקה אם המשתמש צדק בבחירה שלו
+      if (type === activeItem.correct) {
+        correctAnswersCount++;
       }
 
-      try { 
-        localStorage.setItem('authenticly_user_votes', JSON.stringify(userVotes)); 
-      } catch(e) {}
+      // מעבר אוטומטי לתמונה הבאה
+      currentIndex++;
+
+      if (currentIndex < ITEMS.length) {
+        drawSlide();
+      } else {
+        showGameResults();
+      }
+    }
+
+    function showGameResults() {
+      // עדכון הכותרות הראשיות של העמוד לטובת דף התוצאות
+      document.getElementById('mainTitleText').innerText = "סיימת את האתגר!";
       
+      const scorePercent = Math.round((correctAnswersCount / ITEMS.length) * 100);
+      document.getElementById('subtitleText').innerText = `צדקת ב-${correctAnswersCount} מתוך ${ITEMS.length} תמונות (${scorePercent}% הצלחה)`;
+
+      // החלפת התמונה הראשית בפלקט/גיף סיום אלגנטי (או סמל לבחירתך)
+      document.getElementById('displayImage').src = "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1000";
+      document.getElementById('displayTitle').innerText = "סיכום המשחק";
+
+      // העלמת כפתורי המשחק והחלפתם בכפתור הפעלה מחדש (שומר על עיצוב הכפתורים שלך)
+      document.getElementById('voteActionsBlock').innerHTML = `
+        <button class="btn btn-ai" onclick="restartGame()">לשחק שוב</button>
+      `;
+
+      // עדכון המד הסטטיסטי להראות את אחוז ההצלחה הסופי של השחקן
+      document.getElementById('barHuman').style.width = `${scorePercent}%`;
+      document.getElementById('barAI').style.width = `${100 - scorePercent}%`;
+      document.getElementById('labelHuman').innerText = `תשובות נכונות: ${scorePercent}%`;
+      document.getElementById('labelAI').innerText = `טעויות: ${100 - scorePercent}%`;
+      document.getElementById('labelTotal').innerHTML = `תוצאה סופית: <strong>${correctAnswersCount}/${ITEMS.length}</strong>`;
+    }
+
+    function restartGame() {
+      // איפוס הנתונים להתחלה
+      currentIndex = 0;
+      correctAnswersCount = 0;
+
+      // החזרת הכותרות המקוריות
+      document.getElementById('mainTitleText').innerText = "AUTHENTICLY";
+      document.getElementById('subtitleText').innerText = "האם העיניים שלכם עדיין מזהות את המציאות?";
+
+      // החזרת כפתורי הבחירה המקוריים
+      document.getElementById('voteActionsBlock').innerHTML = `
+        <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
+        <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
+      `;
+
       drawSlide();
     }
 
