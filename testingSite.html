@@ -291,6 +291,68 @@
         .image-container { height: 380px; }
         .nav-links { gap: 30px; }
     }
+
+    .gallery-section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--burgundy);
+  letter-spacing: 6px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.gallery-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  border: 1px solid rgba(192, 171, 154, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(74, 4, 4, 0.1);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(transparent, rgba(74, 4, 4, 0.75));
+  color: var(--white);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.gallery-card:hover .gallery-label {
+  opacity: 1;
+}
   </style>
 </head>
 <body>
@@ -312,9 +374,49 @@
         <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
     </header>
 
-        <!-- פוטר תחתון -->
+    <!-- ===== גלריית תמונות ===== -->
+<section class="gallery-section">
+  <p class="gallery-title">GALLERY</p>
+  <div class="amber-line"></div>
+  <div class="gallery-grid">
+
+    <!-- העתק את הבלוק הזה כמה פעמים שצריך -->
+    <div class="gallery-card">
+      <img src="/images/IAart.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+
+    <div class="gallery-card">
+      <img src="/images/yaelnotAI.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+        <div class="gallery-card">
+      <img src="/images/yaelnotAI.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+        <div class="gallery-card">
+      <img src="/images/yaelnotAI.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+        <div class="gallery-card">
+      <img src="/images/yaelnotAI.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+        <div class="gallery-card">
+      <img src="/images/yaelnotAI.jpeg" alt="תיאור התמונה" class="gallery-img">
+      <div class="gallery-label">תיאור התמונה</div>
+    </div>
+
+    <!-- המשך להוסיף כרטיסים כאן... -->
+
+  </div>
+</section>
+
+    <!-- פוטר תחתון -->
     <footer class="main-footer">
         <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
     </footer>
+
+ 
 </body>
 </html>
