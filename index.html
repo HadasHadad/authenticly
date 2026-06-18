@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AUTHENTICLY | Real or AI</title>
   
-  <!-- פונטים יוקרתיים ועדכניים -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -49,7 +48,7 @@
     .navbar {
         background-color: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(10px); /* אפקט זכוכית מודרני */
-        padding: 20px 0;
+        padding: 20px 10px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -66,6 +65,7 @@
         gap: 50px;
         margin: 0;
         padding: 0;
+        flex-wrap: wrap; /* תמיכה במובייל למניעת חריגה מהמסך */
     }
 
     .nav-links a {
@@ -77,6 +77,7 @@
         transition: var(--transition-smooth);
         position: relative;
         padding-bottom: 4px;
+        white-space: nowrap;
     }
 
     /* אפקט קו תחתון אלגנטי ב-Hover */
@@ -101,18 +102,19 @@
 
     /* --- כותרת פרימיום (Hero) --- */
     .hero {
-        padding: 80px 20px 40px;
+        padding: 60px 20px 30px;
         text-align: center;
     }
 
     .main-title {
-       font-family: 'Playfair Display', serif;
-    font-size: 4.8rem;
-    font-weight: 600;
-    color: var(--burgundy);
-    letter-spacing: 18px;
-    margin-bottom: -14px;
-    margin-top: -65px;
+        font-family: 'Playfair Display', serif;
+        font-size: 4.8rem;
+        font-weight: 600;
+        color: var(--burgundy);
+        letter-spacing: 18px;
+        margin-bottom: 10px;
+        margin-top: 0;
+        word-wrap: break-word;
     }
 
     .amber-line {
@@ -128,6 +130,7 @@
         color: var(--raw-umber);
         font-weight: 300;
         letter-spacing: 0.5px;
+        padding: 0 15px;
     }
 
     /* --- אזור הקרוסלה המרכזי --- */
@@ -136,13 +139,13 @@
         justify-content: center;
         align-items: center;
         flex: 1;
-        padding-bottom: 80px;
+        padding: 0 15px 60px 15px;
     }
 
     .carousel-wrapper {
         max-width: 750px;
         width: 100%;
-        padding: 20px;
+        padding: 0;
         position: relative;
     }
 
@@ -168,7 +171,7 @@
     }
     
     .image-container:hover .test-image {
-        transform: scale(1.02); /* אפקט זום קטן ויפה בטעינה/ריחופ */
+        transform: scale(1.02);
     }
 
     /* תגית שם הבדיקה מעל התמונה */
@@ -176,7 +179,7 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        background-color: rgba(74, 4, 4, 0.9); /* בורגונדי חצי שקוף */
+        background-color: rgba(74, 4, 4, 0.9);
         backdrop-filter: blur(5px);
         color: var(--white);
         padding: 8px 18px;
@@ -202,10 +205,13 @@
         font-size: 1.05rem;
         font-weight: 700;
         cursor: pointer;
-        border-radius: 50px; /* כפתורים עגולים ונעימים לעין */
+        border-radius: 50px;
         border: 2px solid var(--burgundy);
         transition: var(--transition-smooth);
         letter-spacing: 0.5px;
+        width: auto;
+        min-width: 160px;
+        text-align: center;
     }
 
     .btn-real {
@@ -230,23 +236,15 @@
         transform: translateY(-1px);
     }
 
-    /* סימון בחירה פעילה */
-    .btn.active-choice {
-        outline: none;
-        border-color: var(--amber);
-        background-color: var(--amber);
-        color: var(--burgundy);
-        box-shadow: 0 0 20px rgba(255, 191, 0, 0.4);
-    }
-
-    /* --- מד אחוזי הצבעה נקי ואלגנטי --- */
+    /* מד אחוזי הצבעה */
     .results-container {
         max-width: 550px;
         margin: 35px auto 0 auto;
+        padding: 0 10px;
     }
 
     .progress-bar {
-        height: 6px; /* דק ומעודן יותר */
+        height: 6px;
         width: 100%;
         background-color: rgba(192, 171, 154, 0.25);
         border-radius: 10px;
@@ -264,10 +262,39 @@
         font-size: 0.9rem;
         color: var(--raw-umber);
         font-weight: 400;
+        flex-wrap: wrap;
+        gap: 5px;
     }
     
     .stats-text strong {
         color: var(--burgundy);
+    }
+
+    /* --- כפתור "פתח כתוסף" צף קבוע --- */
+    .app-extension-btn {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        background-color: var(--amber);
+        color: var(--burgundy);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .app-extension-btn:hover {
+        transform: scale(1.05);
+        background-color: var(--burgundy);
+        color: var(--white);
     }
 
     /* --- פוטר --- */
@@ -275,9 +302,10 @@
         background-color: var(--burgundy);
         color: rgba(255, 255, 255, 0.7);
         text-align: center;
-        padding: 40px 0;
+        padding: 40px 15px;
         font-size: 0.9rem;
         letter-spacing: 0.5px;
+        margin-top: auto;
     }
 
     .main-footer strong {
@@ -285,17 +313,73 @@
         font-weight: 600;
     }
 
-    /* התאמות רספונסיביות למובייל */
+    /* ==========================================================================
+       התאמות רספונסיביות מלאות לטלפונים (Mobile Responsive)
+       ========================================================================== */
     @media (max-width: 820px) {
-        .main-title { font-size: 3.2rem; letter-spacing: 4px; }
-        .image-container { height: 380px; }
-        .nav-links { gap: 30px; }
+        .main-title { 
+            font-size: 3rem; 
+            letter-spacing: 8px; 
+        }
+        .image-container { 
+            height: 380px; 
+        }
+        .nav-links { 
+            gap: 20px; 
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 15px 5px;
+        }
+        .nav-links {
+            gap: 12px;
+        }
+        .nav-links a {
+            font-size: 0.85rem;
+        }
+        .hero {
+            padding: 40px 10px 20px;
+        }
+        .main-title { 
+            font-size: 2.2rem; 
+            letter-spacing: 4px; 
+        }
+        .subtitle {
+            font-size: 1rem;
+        }
+        .image-container { 
+            height: 280px; 
+            border-radius: 12px;
+        }
+        .vote-actions {
+            flex-direction: column; /* כפתורים זה תחת זה במובייל לנוחות מקסימלית */
+            gap: 12px;
+            width: 100%;
+            padding: 0 10px;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1rem;
+        }
+        .stats-text {
+            font-size: 0.8rem;
+            justify-content: center;
+            gap: 15px;
+        }
+        .app-extension-btn {
+            bottom: 15px;
+            left: 15px;
+            padding: 10px 15px;
+            font-size: 0.75rem;
+        }
     }
   </style>
 </head>
 <body>
 
-    <!-- סרגל ניווט עליון -->
     <nav class="navbar">
         <ul class="nav-links">
             <li><a href="/index.html">דף הבית</a></li>
@@ -305,18 +389,19 @@
         </ul>
     </nav>
 
-    <!-- כותרת ראשית -->
+    <button class="app-extension-btn" onclick="openAsExtension()">
+        🌐 פתח כתוסף עצמאי
+    </button>
+
     <header class="hero">
         <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
         <div class="amber-line"></div>
         <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
     </header>
 
-    <!-- קרוסלה ותוכן מרכזי -->
     <main class="main-content">
         <section class="carousel-wrapper">
 
-            <!-- אזור התמונה נשאר זהה לחלוטין בעיצובו -->
             <div class="image-container">
                 <img src="" alt="Reality Test" id="displayImage" class="test-image">
                 <div class="overlay-text">
@@ -324,13 +409,11 @@
                 </div>
             </div>
 
-            <!-- כפתורי ההצבעה המקוריים שלך -->
             <div class="vote-actions" id="voteActionsBlock">
                 <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
                 <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
             </div>
 
-            <!-- מד אחוזי ההצבעה משמש כעת להצגת הסטטיסטיקה והתוצאה בסיום -->
             <div class="results-container">
                 <div class="progress-bar">
                     <div id="barHuman" class="fill-human" style="width: 50%"></div>
@@ -345,13 +428,11 @@
         </section>
     </main>
 
-    <!-- פוטר תחתון -->
     <footer class="main-footer">
         <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
     </footer>
 
   <script>
-    // מערך הנתונים המקורי שלך - התווסף לו רק שדה הגדרת התשובה הנכונה (correct)
     const ITEMS = [
       { id: 1, title: "בדיקה מס' 01", src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000", correct: "human" },
       { id: 2, title: "בדיקה מס' 02", src: "https://picsum.photos/seed/city3/600/400",  correct: "ai" },
@@ -369,7 +450,6 @@
       document.getElementById('displayImage').src = activeItem.src;
       document.getElementById('displayTitle').innerText = activeItem.title;
 
-      // עדכון המד התחתון שיראה את התקדמות השאלות (לדוגמה: תמונה 1 מתוך 5)
       const currentNumber = currentIndex + 1;
       const progressPercent = Math.round((currentNumber / ITEMS.length) * 100);
       
@@ -384,12 +464,10 @@
     function submitGameVote(type) {
       const activeItem = ITEMS[currentIndex];
 
-      // בדיקה אם המשתמש צדק בבחירה שלו
       if (type === activeItem.correct) {
         correctAnswersCount++;
       }
 
-      // מעבר אוטומטי לתמונה הבאה
       currentIndex++;
 
       if (currentIndex < ITEMS.length) {
@@ -400,22 +478,18 @@
     }
 
     function showGameResults() {
-      // עדכון הכותרות הראשיות של העמוד לטובת דף התוצאות
       document.getElementById('mainTitleText').innerText = "סיימת את האתגר!";
       
       const scorePercent = Math.round((correctAnswersCount / ITEMS.length) * 100);
       document.getElementById('subtitleText').innerText = `צדקת ב-${correctAnswersCount} מתוך ${ITEMS.length} תמונות (${scorePercent}% הצלחה)`;
 
-      // החלפת התמונה הראשית בפלקט/גיף סיום אלגנטי (או סמל לבחירתך)
       document.getElementById('displayImage').src = "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1000";
       document.getElementById('displayTitle').innerText = "סיכום המשחק";
 
-      // העלמת כפתורי המשחק והחלפתם בכפתור הפעלה מחדש (שומר על עיצוב הכפתורים שלך)
       document.getElementById('voteActionsBlock').innerHTML = `
         <button class="btn btn-ai" onclick="restartGame()">לשחק שוב</button>
       `;
 
-      // עדכון המד הסטטיסטי להראות את אחוז ההצלחה הסופי של השחקן
       document.getElementById('barHuman').style.width = `${scorePercent}%`;
       document.getElementById('barAI').style.width = `${100 - scorePercent}%`;
       document.getElementById('labelHuman').innerText = `תשובות נכונות: ${scorePercent}%`;
@@ -424,21 +498,32 @@
     }
 
     function restartGame() {
-      // איפוס הנתונים להתחלה
       currentIndex = 0;
       correctAnswersCount = 0;
 
-      // החזרת הכותרות המקוריות
       document.getElementById('mainTitleText').innerText = "AUTHENTICLY";
       document.getElementById('subtitleText').innerText = "האם העיניים שלכם עדיין מזהות את המציאות?";
 
-      // החזרת כפתורי הבחירה המקוריים
       document.getElementById('voteActionsBlock').innerHTML = `
         <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
         <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
       `;
 
       drawSlide();
+    }
+
+    // פונקציית הקסם שפותחת את האתר בחלון ייעודי מנותק כמו תוסף
+    function openAsExtension() {
+        const width = 450;
+        const height = 750;
+        const left = (screen.width / 2) - (width / 2);
+        const top = (screen.height / 2) - (height / 2);
+        
+        window.open(
+            window.location.href, 
+            'AuthenticlyExtension', 
+            `menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes,width=${width},height=${height},top=${top},left=${left}`
+        );
     }
 
     window.addEventListener('DOMContentLoaded', drawSlide);

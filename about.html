@@ -1,7 +1,308 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-        <nav class="navbar">
+  <meta charset="UTF-8">
+  <!-- הגדרה חיונית כדי שהאתר יעבוד ויקרא נכון בטלפונים ניידים -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTHENTICLY | Real or AI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Playfair+Display:ital,wght=0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+        --white: #ffffff;
+        --sage: #C0AB9A;
+        --amber: #FFBF00;
+        --burgundy: #4A0404;
+        --light-bg: #fdfdfd;
+        --pearl: #F7F5F2;
+        --platinum: #CDA89A;
+        --tuscany: #CDA89A;
+        --raw-umber: #7B5C49;
+        --old-burgundy: #43302E;
+        --deep-asagi: #000000;
+        --card-shadow: 0 20px 40px rgba(74, 4, 4, 0.06);
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Assistant', sans-serif;
+        background: var(--pearl);
+        color: var(--old-burgundy);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navbar {
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        padding: 20px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid rgba(192, 171, 154, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--burgundy);
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        transition: var(--transition-smooth);
+        position: relative;
+        padding-bottom: 4px;
+        white-space: nowrap;
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--amber);
+        transition: var(--transition-smooth);
+    }
+
+    .nav-links a:hover { color: var(--raw-umber); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hero {
+        padding: 60px 20px 30px;
+        text-align: center;
+    }
+
+    .main-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 4.8rem;
+        font-weight: 600;
+        color: var(--burgundy);
+        letter-spacing: 18px;
+        margin-bottom: 10px;
+        margin-top: 0;
+        word-wrap: break-word;
+    }
+
+    .amber-line {
+        width: 50px;
+        height: 2px;
+        background-color: var(--amber);
+        margin: 0 auto 20px;
+        border-radius: 2px;
+    }
+
+    .subtitle {
+        font-size: 1.15rem;
+        color: var(--raw-umber);
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        padding: 0 15px;
+    }
+
+    .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 0 15px 60px 15px;
+    }
+
+    .carousel-wrapper {
+        max-width: 750px;
+        width: 100%;
+        padding: 0;
+        position: relative;
+    }
+
+    .image-container {
+        position: relative;
+        width: 100%;
+        height: 480px;
+        background-color: var(--white);
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        transition: var(--transition-smooth);
+        border: 1px solid rgba(192, 171, 154, 0.15);
+    }
+
+    .test-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+    
+    .image-container:hover .test-image { transform: scale(1.02); }
+
+    .overlay-text {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(74, 4, 4, 0.9);
+        backdrop-filter: blur(5px);
+        color: var(--white);
+        padding: 8px 18px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border-radius: 30px;
+        z-index: 5;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .vote-actions {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 35px;
+    }
+
+    .btn {
+        padding: 16px 48px;
+        font-family: 'Assistant', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+        border-radius: 50px;
+        border: 2px solid var(--burgundy);
+        transition: var(--transition-smooth);
+        letter-spacing: 0.5px;
+        width: auto;
+        min-width: 160px;
+        text-align: center;
+    }
+
+    .btn-real { background-color: var(--white); color: var(--burgundy); }
+    .btn-ai { background-color: var(--burgundy); color: var(--white); }
+
+    .btn:hover {
+        background-color: var(--amber);
+        border-color: var(--amber);
+        color: var(--burgundy);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 191, 0, 0.2);
+    }
+    
+    .btn:active { transform: translateY(-1px); }
+
+    .results-container {
+        max-width: 550px;
+        margin: 35px auto 0 auto;
+        padding: 0 10px;
+    }
+
+    .progress-bar {
+        height: 6px;
+        width: 100%;
+        background-color: rgba(192, 171, 154, 0.25);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+    }
+    
+    .fill-human { background-color: var(--sage); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .fill-ai { background-color: var(--burgundy); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    
+    .stats-text {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        font-size: 0.9rem;
+        color: var(--raw-umber);
+        font-weight: 400;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .stats-text strong { color: var(--burgundy); }
+
+    /* עיצוב כפתור ההורדה החדש - מתאים בדיוק לשפה העיצובית שלך */
+    .download-addon-btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .btn-download-addon {
+        background-color: var(--amber);
+        color: var(--burgundy);
+        padding: 14px 40px;
+        font-family: 'Assistant', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 50px;
+        border: 2px solid var(--amber);
+        box-shadow: 0 6px 15px rgba(255, 191, 0, 0.15);
+        transition: var(--transition-smooth);
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btn-download-addon:hover {
+        background-color: var(--white);
+        border-color: var(--burgundy);
+        color: var(--burgundy);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(74, 4, 4, 0.1);
+    }
+
+    .main-footer {
+        background-color: var(--burgundy);
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        padding: 40px 15px;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        margin-top: auto;
+    }
+
+    .main-footer strong { color: var(--amber); font-weight: 600; }
+
+    /* התאמות קלות ובלעדיות למובייל מבלי לשנות דבר בעיצוב הרגיל */
+    @media (max-width: 820px) {
+        .main-title { font-size: 3rem; letter-spacing: 8px; }
+        .image-container { height: 380px; }
+    }
+
+    @media (max-width: 480px) {
+        .main-title { font-size: 2.2rem; letter-spacing: 4px; }
+        .image-container { height: 280px; }
+        .vote-actions { padding: 0 10px; }
+        .btn { padding: 12px 24px; min-width: 120px; font-size: 0.95rem; }
+        .btn-download-addon { padding: 12px 30px; font-size: 0.95rem; width: 90%; }
+    }
+  </style>
+</head>
+<body>
+
+    <nav class="navbar">
         <ul class="nav-links">
             <li><a href="/index.html">דף הבית</a></li>
             <li><a href="/about.html">אודות</a></li>
@@ -9,108 +310,113 @@
             <li><a href="/testingSite.html">הדגמה</a></li>
         </ul>
     </nav>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<title>אודות</title>
 
-<style>
-    .media-container {
-        position: relative;
-        cursor: pointer;
+    <header class="hero">
+        <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
+        <div class="amber-line"></div>
+        <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+    </header>
+
+    <main class="main-content">
+        <section class="carousel-wrapper">
+            <div class="image-container">
+                <img src="" alt="Reality Test" id="displayImage" class="test-image">
+                <div class="overlay-text">
+                    <span id="displayTitle">טוען...</span>
+                </div>
+            </div>
+
+            <div class="vote-actions" id="voteActionsBlock">
+                <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
+                <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
+            </div>
+
+            <!-- כפתור "להורדת התוסף" עם הקישור הישיר לגיטהאב שלך -->
+            <div class="download-addon-btn-container">
+                <a href="https://github.com/HadasHadad/authenticly-addon/archive/refs/heads/main.zip" class="btn-download-addon" download>
+                    להורדת התוסף
+                </a>
+            </div>
+
+            <div class="results-container">
+                <div class="progress-bar">
+                    <div id="barHuman" class="fill-human" style="width: 50%"></div>
+                    <div id="barAI" class="fill-ai" style="width: 50%"></div>
+                </div>
+                <div class="stats-text">
+                    <span id="labelHuman">אנושי: 50%</span>
+                    <span id="labelTotal">0 דירוגים</span>
+                    <span id="labelAI">AI: 50%</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
+    </footer>
+
+  <script>
+    const ITEMS = [
+      { id: 1, title: "בדיקה מס' 01", src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000", correct: "human" },
+      { id: 2, title: "בדיקה מס' 02", src: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000", correct: "ai" },
+      { id: 3, title: "בדיקה מס' 03", src: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1000", correct: "human" },
+      { id: 4, title: "בדיקה מס' 04", src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000", correct: "ai" },
+      { id: 5, title: "בדיקה מס' 05", src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000", correct: "ai" }
+    ];
+
+    let currentIndex = 0;
+    let correctAnswersCount = 0;
+
+    function drawSlide() {
+      const activeItem = ITEMS[currentIndex];
+      document.getElementById('displayImage').src = activeItem.src;
+      document.getElementById('displayTitle').innerText = activeItem.title;
+
+      const currentNumber = currentIndex + 1;
+      const progressPercent = Math.round((currentNumber / ITEMS.length) * 100);
+      
+      document.getElementById('barHuman').style.width = `${progressPercent}%`;
+      document.getElementById('barAI').style.width = `${100 - progressPercent}%`;
+
+      document.getElementById('labelHuman').innerText = `שאלה ${currentNumber}`;
+      document.getElementById('labelAI').innerText = `מתוך ${ITEMS.length}`;
+      document.getElementById('labelTotal').innerHTML = `שלב המשחק`;
     }
-    .media-container video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        border-radius: 8px;
+
+    function submitGameVote(type) {
+      const activeItem = ITEMS[currentIndex];
+      if (type === activeItem.correct) { correctAnswersCount++; }
+      currentIndex++;
+      if (currentIndex < ITEMS.length) { drawSlide(); } else { showGameResults(); }
     }
-    .media-container:hover video {
-        opacity: 1;
+
+    function showGameResults() {
+      document.getElementById('mainTitleText').innerText = "סיימת את האתגר!";
+      const scorePercent = Math.round((correctAnswersCount / ITEMS.length) * 100);
+      document.getElementById('subtitleText').innerText = `צדקת ב-${correctAnswersCount} מתוך ${ITEMS.length} תמונות (${scorePercent}% הצלחה)`;
+      document.getElementById('displayImage').src = "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1000";
+      document.getElementById('displayTitle').innerText = "סיכום המשחק";
+      document.getElementById('voteActionsBlock').innerHTML = `<button class="btn btn-ai" onclick="restartGame()">לשחק שוב</button>`;
+
+      document.getElementById('barHuman').style.width = `${scorePercent}%`;
+      document.getElementById('barAI').style.width = `${100 - scorePercent}%`;
+      document.getElementById('labelHuman').innerText = `תשובות נכונות: ${scorePercent}%`;
+      document.getElementById('labelAI').innerText = `טעויות: ${100 - scorePercent}%`;
+      document.getElementById('labelTotal').innerHTML = `תוצאה סופית: <strong>${correctAnswersCount}/${ITEMS.length}</strong>`;
     }
-</style>
 
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="hero">
-        <h1>אודות הפרוייקט שלנו</h1>
-        <p>מזהים מניפולציות ומחזירים את האמון למציאות הדיגיטלית</p>
-    </div>
-
-    <div class="section">
-        <div class="media-container">
-            <img src="./images/yaelnotAI.jpeg" alt="ציור אנושי מקורי">
-            <video src="./images/yaelnotAI.mp4" loop muted playsinline></video>
-        </div>
-        <div class="card">
-            <h2>היצירה האנושית והסיפור שלנו</h2>
-            <p>
-                הכל התחיל מרעיון פשוט בעידן שבו בינה מלאכותית (AI) מייצרת מדיה מזויפת בקלות, הגולשים חווים אובדן שליטה ובלבול. הפרויקט שלנו נולד מתוך רצון להגן על המרחב הדיגיטלי ולהעניק למשתמשים כלים שיעזרו להם לדעת מה באמת נכון.
-            </p>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="card">
-            <h2>טכנולוגיית ה-AI והפתרון שלנו</h2>
-            <p>
-                אנחנו מפתחים תוסף דפדפן חברתי המבוסס על חוכמת המונים. המערכת מאפשרת למעגלי חברים קרובים לאמת תוכן ויזואלי ותמונות באתרי החדשות בזמן אמת, ולהציג מדדי אמינות מדויקים שימנעו הטיות והטעיות.
-            </p>
-        </div>
-        <div class="media-container">
-            <img src="./images/IAart.jpeg" alt="ציור שנוצר על ידי AI">
-            <video src="./images/IAart.mp4" loop muted playsinline></video>
-        </div>
-    </div>
-
-    <div class="values">
-        <div class="value">
-            <h3>מקצועיות</h3>
-            <p>דיוק, ניסיון ותשומת לב לפרטים הקטנים של האלגוריתם.</p>
-        </div>
-        <div class="value">
-            <h3>אמינות</h3>
-            <p>שקיפות מלאה בעזרת מדד ה-Confidence Level שמגיע מהשרת.</p>
-        </div>
-        <div class="value">
-            <h3>האימפקט</h3>
-            <p>מחזירים את השליטה לגולשים כמו מיה, ומאפשרים לגלוש ברשת בביטחון.</p>
-        </div>
-    </div>
-
-    <div class="cta">
-        <h2>רוצים לקחת חלק בשינוי?</h2>
-        <button>צור קשר</button>
-    </div>
-
-</div>
-
-<script>
-    const containers = document.querySelectorAll('.media-container');
-
-    containers.forEach(container => {
-        const video = container.querySelector('video');
-
-        container.addEventListener('mouseenter', () => {
-            video.play().catch(error => console.log(error));
-        });
-
-        container.addEventListener('mouseleave', () => {
-            video.pause();
-            video.currentTime = 0;
-        });
-    });
-</script>
-
-
+    function restartGame() {
+      currentIndex = 0; correctAnswersCount = 0;
+      document.getElementById('mainTitleText').innerText = "AUTHENTICLY";
+      document.getElementById('subtitleText').innerText = "האם העיניים שלכם עדיין מזהות את המציאות?";
+      document.getElementById('voteActionsBlock').innerHTML = `
+        <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
+        <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
+      `;
+      drawSlide();
+    }
+    window.addEventListener('DOMContentLoaded', drawSlide);
+  </script>
 </body>
 </html>
