@@ -298,6 +298,31 @@
         margin-top: 25px;
     }
 
+        .btn-download-addon {
+        background-color: var(--amber);
+        color: var(--burgundy);
+        padding: 14px 40px;
+        font-family: 'Assistant', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 50px;
+        border: 2px solid var(--amber);
+        box-shadow: 0 6px 15px rgba(255, 191, 0, 0.15);
+        transition: var(--transition-smooth);
+        cursor: pointer;
+        text-align: center;
+    }
+
+    
+    .btn-download-addon:hover {
+        background-color: var(--white);
+        border-color: var(--burgundy);
+        color: var(--burgundy);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(74, 4, 4, 0.1);
+    }
+
 
     .main-footer strong {
         color: var(--amber);
@@ -380,9 +405,7 @@
         </ul>
     </nav>
 
-    <button class="app-extension-btn" onclick="openAsExtension()">
-        🌐 פתח כתוסף עצמאי
-    </button>
+   
 
     <header class="hero">
         <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
