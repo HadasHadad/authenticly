@@ -270,26 +270,7 @@
         color: var(--burgundy);
     }
 
-    /* --- כפתור "פתח כתוסף" צף קבוע --- */
-    .app-extension-btn {
-        position: fixed;
-        bottom: 25px;
-        left: 25px;
-        background-color: var(--amber);
-        color: var(--burgundy);
-        border: none;
-        padding: 12px 20px;
-        border-radius: 30px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        transition: var(--transition-smooth);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+   
 
     .app-extension-btn:hover {
         transform: scale(1.05);
@@ -398,6 +379,13 @@
         <div class="amber-line"></div>
         <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
     </header>
+
+            <!-- כפתור "להורדת התוסף" עם הקישור הישיר לגיטהאב שלך -->
+            <div class="download-addon-btn-container">
+                <a href="https://github.com/HadasHadad/authenticly-addon/archive/refs/heads/main.zip" class="btn-download-addon" download>
+                    להורדת התוסף
+                </a>
+            </div>
 
     <main class="main-content">
         <section class="carousel-wrapper">
