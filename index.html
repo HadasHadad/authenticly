@@ -174,6 +174,185 @@
         transform: scale(1.02);
     }
 
+    /* --- אזור "איך זה עובד" --- */
+.how-it-works {
+    max-width: 750px;
+    margin: 70px auto 0 auto;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.how-it-works .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--burgundy);
+    margin-bottom: 14px;
+}
+
+.how-it-works .section-intro {
+    font-size: 1.05rem;
+    color: var(--raw-umber);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    line-height: 1.8;
+}
+
+.steps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: right;
+}
+
+.step-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(192, 171, 154, 0.15);
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    transition: var(--transition-smooth);
+}
+
+.step-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 25px 45px rgba(74, 4, 4, 0.1);
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--burgundy);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.step-content h3 {
+    font-size: 1.1rem;
+    color: var(--burgundy);
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.step-content p {
+    font-size: 0.95rem;
+    color: var(--old-burgundy);
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.poster-preview {
+    margin-top: 45px;
+    text-align: center;
+}
+
+.poster-preview img {
+    max-width: 100%;
+    width: 420px;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(192, 171, 154, 0.15);
+}
+
+.poster-preview .caption {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--raw-umber);
+    letter-spacing: 0.5px;
+}
+
+/* --- אזור הורדה והתקנה --- */
+.install-section {
+    max-width: 750px;
+    margin: 80px auto 0 auto;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.install-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(192, 171, 154, 0.15);
+    padding: 40px 35px;
+}
+
+.install-card .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--burgundy);
+    margin-bottom: 30px;
+}
+
+.install-steps {
+    list-style: none;
+    text-align: right;
+    counter-reset: install-counter;
+    margin-bottom: 35px;
+}
+
+.install-steps li {
+    counter-increment: install-counter;
+    position: relative;
+    padding: 14px 0 14px 0;
+    padding-right: 50px;
+    font-size: 1rem;
+    color: var(--old-burgundy);
+    line-height: 1.7;
+    border-bottom: 1px solid rgba(192, 171, 154, 0.2);
+}
+
+.install-steps li:last-child {
+    border-bottom: none;
+}
+
+.install-steps li::before {
+    content: counter(install-counter);
+    position: absolute;
+    right: 0;
+    top: 12px;
+    width: 32px;
+    height: 32px;
+    background-color: var(--amber);
+    color: var(--burgundy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.install-steps li strong {
+    color: var(--burgundy);
+}
+
+.install-steps li code {
+    background-color: var(--pearl);
+    color: var(--burgundy);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .how-it-works .section-title,
+    .install-card .section-title { font-size: 1.6rem; }
+    .step-card { flex-direction: column; padding: 20px; }
+    .install-card { padding: 28px 20px; }
+}
+
     /* תגית שם הבדיקה מעל התמונה */
     .overlay-text {
         position: absolute;
@@ -410,144 +589,56 @@
     <header class="hero">
         <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
         <div class="amber-line"></div>
-        <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+        <p class="subtitle" id="subtitleText">תוסף דפדפן שמחזיר את  הכוח לאנשים</p>
     </header>
 
-            <!-- כפתור "להורדת התוסף" עם הקישור הישיר לגיטהאב שלך -->
+            <!---כפתור "להורדת התוסף"ך -->
             <div class="download-addon-btn-container">
                 <a href="https://github.com/HadasHadad/authenticly-addon/archive/refs/heads/main.zip" class="btn-download-addon" download>
                     להורדת התוסף
                 </a>
             </div>
 
-    <main class="main-content">
-        <section class="carousel-wrapper">
+            <!-- ===== איך זה עובד ===== -->
+<section class="how-it-works">
+    <h2 class="section-title">איך זה עובד?</h2>
+    <p class="section-intro">
+        ה-AI Watchdog הוא תוסף דפדפן שפועל ברקע ובוחן בזמן אמת תמונות וסרטונים שמופיעים מול המשתמש ברשת.
+        התוסף מזהה סימנים אופייניים לתוכן שנוצר או נערך באמצעות בינה מלאכותית, ומציג למשתמש תווית ברורה
+        — "אותנטי" או "חשוד כמלאכותי" — ישירות על גבי התוכן, בלי לפגוע בחוויית הגלישה.
+    </p>
 
-            <div class="image-container">
-                <img src="" alt="Reality Test" id="displayImage" class="test-image">
-                <div class="overlay-text">
-                    <span id="displayTitle">טוען...</span>
-                </div>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>זיהוי התמונה</h3>
+                <p>התוסף סורק את הדף ומאתר אוטומטית כל "פיסת תוכן" — תמונה, סרטון או באנר — שמוצגת למשתמש.</p>
             </div>
+        </div>
 
-            <div class="vote-actions" id="voteActionsBlock">
-                <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
-                <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>ניתוח חכם מבוסס AI</h3>
+                <p>מודל ייעודי לזיהוי תוכן סינתטי בוחן דפוסים, מרקמים ועיוותים שאופייניים לתמונות שנוצרו על ידי בינה מלאכותית.</p>
             </div>
+        </div>
 
-            <div class="results-container">
-                <div class="progress-bar">
-                    <div id="barHuman" class="fill-human" style="width: 50%"></div>
-                    <div id="barAI" class="fill-ai" style="width: 50%"></div>
-                </div>
-                <div class="stats-text">
-                    <span id="labelHuman">אנושי: 50%</span>
-                    <span id="labelTotal">0 דירוגים</span>
-                    <span id="labelAI">AI: 50%</span>
-                </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>תווית מיידית על המסך</h3>
+                <p>מיד לאחר הניתוח, מופיעה תווית ברורה מעל התוכן, כדי שתדעו תמיד מול מה אתם עומדים — בלי לעצור את הגלישה.</p>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+</section>
 
     <footer class="main-footer">
         <p>כל זכויות היוצרים שמורות ל-<strong>AUTHENTICLY</strong> &copy; 2026</p>
     </footer>
 
-  <script>
-    const ITEMS = [
-      { id: 1, title: "בדיקה מס' 01", src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1000", correct: "human" },
-      { id: 2, title: "בדיקה מס' 02", src: "https://picsum.photos/seed/city3/600/400",  correct: "ai" },
-      { id: 3, title: "בדיקה מס' 03", src: "https://picsum.photos/seed/flow5/600/400",  correct: "human" },
-      { id: 4, title: "בדיקה מס' 04", src: "https://picsum.photos/seed/moon6/600/400",  correct: "ai" },
-      { id: 5, title: "בדיקה מס' 05", src: "https://picsum.photos/seed/robot8/600/400", correct: "ai" }
-    ];
-
-    let currentIndex = 0;
-    let correctAnswersCount = 0;
-
-    function drawSlide() {
-      const activeItem = ITEMS[currentIndex];
-      
-      document.getElementById('displayImage').src = activeItem.src;
-      document.getElementById('displayTitle').innerText = activeItem.title;
-
-      const currentNumber = currentIndex + 1;
-      const progressPercent = Math.round((currentNumber / ITEMS.length) * 100);
-      
-      document.getElementById('barHuman').style.width = `${progressPercent}%`;
-      document.getElementById('barAI').style.width = `${100 - progressPercent}%`;
-
-      document.getElementById('labelHuman').innerText = `שאלה ${currentNumber}`;
-      document.getElementById('labelAI').innerText = `מתוך ${ITEMS.length}`;
-      document.getElementById('labelTotal').innerHTML = `שלב המשחק`;
-    }
-
-    function submitGameVote(type) {
-      const activeItem = ITEMS[currentIndex];
-
-      if (type === activeItem.correct) {
-        correctAnswersCount++;
-      }
-
-      currentIndex++;
-
-      if (currentIndex < ITEMS.length) {
-        drawSlide();
-      } else {
-        showGameResults();
-      }
-    }
-
-    function showGameResults() {
-      document.getElementById('mainTitleText').innerText = "סיימת את האתגר!";
-      
-      const scorePercent = Math.round((correctAnswersCount / ITEMS.length) * 100);
-      document.getElementById('subtitleText').innerText = `צדקת ב-${correctAnswersCount} מתוך ${ITEMS.length} תמונות (${scorePercent}% הצלחה)`;
-
-      document.getElementById('displayImage').src = "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1000";
-      document.getElementById('displayTitle').innerText = "סיכום המשחק";
-
-      document.getElementById('voteActionsBlock').innerHTML = `
-        <button class="btn btn-ai" onclick="restartGame()">לשחק שוב</button>
-      `;
-
-      document.getElementById('barHuman').style.width = `${scorePercent}%`;
-      document.getElementById('barAI').style.width = `${100 - scorePercent}%`;
-      document.getElementById('labelHuman').innerText = `תשובות נכונות: ${scorePercent}%`;
-      document.getElementById('labelAI').innerText = `טעויות: ${100 - scorePercent}%`;
-      document.getElementById('labelTotal').innerHTML = `תוצאה סופית: <strong>${correctAnswersCount}/${ITEMS.length}</strong>`;
-    }
-
-    function restartGame() {
-      currentIndex = 0;
-      correctAnswersCount = 0;
-
-      document.getElementById('mainTitleText').innerText = "AUTHENTICLY";
-      document.getElementById('subtitleText').innerText = "האם העיניים שלכם עדיין מזהות את המציאות?";
-
-      document.getElementById('voteActionsBlock').innerHTML = `
-        <button id="btnReal" class="btn btn-real" onclick="submitGameVote('human')">אנושי</button>
-        <button id="btnAI" class="btn btn-ai" onclick="submitGameVote('ai')">AI</button>
-      `;
-
-      drawSlide();
-    }
-
-    // פונקציית הקסם שפותחת את האתר בחלון ייעודי מנותק כמו תוסף
-    function openAsExtension() {
-        const width = 450;
-        const height = 750;
-        const left = (screen.width / 2) - (width / 2);
-        const top = (screen.height / 2) - (height / 2);
-        
-        window.open(
-            window.location.href, 
-            'AuthenticlyExtension', 
-            `menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes,width=${width},height=${height},top=${top},left=${left}`
-        );
-    }
-
-    window.addEventListener('DOMContentLoaded', drawSlide);
-  </script>
+ 
 </body>
 </html>
