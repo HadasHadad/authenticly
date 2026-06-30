@@ -115,6 +115,245 @@
     margin-top: -65px;
     }
 
+    /* --- עמוד אודות --- */
+.about-hero {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 60px 15px 0;
+    text-align: center;
+}
+
+.about-hero .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    color: var(--burgundy);
+    margin-bottom: 10px;
+}
+
+.about-hero .amber-line {
+    width: 50px;
+    height: 2px;
+    background-color: var(--amber);
+    margin: 0 auto 25px;
+    border-radius: 2px;
+}
+
+.about-hero .about-lead {
+    font-size: 1.1rem;
+    color: var(--raw-umber);
+    font-weight: 400;
+    line-height: 1.9;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* --- ציר זמן שנתיים --- */
+.journey-section {
+    max-width: 750px;
+    margin: 70px auto 0;
+    padding: 0 15px;
+}
+
+.journey-section .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--burgundy);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.timeline {
+    position: relative;
+    padding-right: 30px;
+    border-right: 2px solid rgba(192, 171, 154, 0.4);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 36px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    right: -39px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--amber);
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 2px var(--burgundy);
+}
+
+.timeline-item .year-tag {
+    display: inline-block;
+    background-color: var(--burgundy);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.timeline-item h3 {
+    font-size: 1.15rem;
+    color: var(--burgundy);
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.timeline-item p {
+    font-size: 0.95rem;
+    color: var(--old-burgundy);
+    line-height: 1.8;
+    max-width: 600px;
+}
+
+/* --- כרטיסי תחומי עיסוק / מיומנויות --- */
+.skills-section {
+    max-width: 750px;
+    margin: 70px auto 0;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.skills-section .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--burgundy);
+    margin-bottom: 35px;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+}
+
+.skill-chip {
+    background-color: var(--white);
+    border: 1px solid rgba(192, 171, 154, 0.3);
+    box-shadow: var(--card-shadow);
+    border-radius: 14px;
+    padding: 20px 26px;
+    min-width: 150px;
+    transition: var(--transition-smooth);
+}
+
+.skill-chip:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+}
+
+.skill-chip .skill-title {
+    color: var(--burgundy);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.skill-chip .skill-desc {
+    color: var(--raw-umber);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* --- גלריית תמונות --- */
+.gallery-section {
+    max-width: 900px;
+    margin: 70px auto 0;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.gallery-section .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--burgundy);
+    margin-bottom: 10px;
+}
+
+.gallery-section .section-intro {
+    font-size: 1rem;
+    color: var(--raw-umber);
+    margin-bottom: 35px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.gallery-grid figure {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(192, 171, 154, 0.15);
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background-color: var(--white);
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.gallery-grid figure:hover img {
+    transform: scale(1.06);
+}
+
+.gallery-grid figcaption {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: linear-gradient(transparent, rgba(74, 4, 4, 0.85));
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 22px 12px 10px;
+    text-align: center;
+}
+
+.closing-line {
+    max-width: 650px;
+    margin: 70px auto 0;
+    padding: 0 15px 60px;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--burgundy);
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .about-hero .section-title,
+    .journey-section .section-title,
+    .skills-section .section-title,
+    .gallery-section .section-title { font-size: 1.6rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .timeline { padding-right: 22px; }
+    .timeline-item::before { right: -30px; width: 13px; height: 13px; }
+}
+
     .amber-line {
         width: 50px;
         height: 2px;
@@ -309,11 +548,99 @@
     <header class="hero">
         <h1 class="main-title" id="mainTitleText">AUTHENTICLY</h1>
         <div class="amber-line"></div>
-        <p class="subtitle" id="subtitleText">האם העיניים שלכם עדיין מזהות את המציאות?</p>
+        
     </header>
+<!-- ===== פתיח ===== -->
+<section class="about-hero">
+    <h2 class="section-title">מי אנחנו</h2>
+    <div class="amber-line"></div>
+    <p class="about-lead">
+        אנחנו קבוצה של בני 16–17 מקריית גת, בעלי עניין משותף בעולם המחשבים, התכנות והטכנולוגיה.
+        במשך השנתיים האחרונות פעלנו יחד, כקבוצה, לפיתוח הידע והיכולות שלנו בתחומי מדעי המחשב,
+        פתרון בעיות, עבודת צוות וחשיבה יצירתית — ולאורך הדרך הפכנו מקבוצת תלמידים סקרנים לצוות פיתוח של ממש.
+    </p>
+</section>
 
-    <p>אנחנו קבוצה של בני 16–17 מקריית גת, בעלי עניין משותף בעולם המחשבים, התכנות והטכנולוגיה. במסגרת התוכנית אנו פועלים לפיתוח הידע והיכולות שלנו בתחומי מדעי המחשב, פתרון בעיות, עבודת צוות וחשיבה יצירתית.</p>
-    <p>הקבוצה שואפת ללמוד טכנולוגיות חדשות, לפתח פרויקטים מעשיים ולצבור ניסיון שיסייע לנו בהמשך דרכנו האקדמית והמקצועית. אנו מאמינים בלמידה משותפת, חדשנות והתמדה, ופועלים בסביבה המעודדת סקרנות, יוזמה ושיתוף פעולה. מטרתנו היא להרחיב את היכולות הטכנולוגיות שלנו ולהתכונן לאתגרי העתיד בעולם הדיגיטלי המתפתח</p>
+<!-- ===== ציר הזמן ===== -->
+<section class="journey-section">
+    <h2 class="section-title">המסע שלנו</h2>
+    <div class="timeline">
+        <div class="timeline-item">
+            <span class="year-tag">שנה ראשונה</span>
+            <h3>הצעדים הראשונים בעולם הפיתוח</h3>
+            <p>
+                התחלנו מהבסיס — למדנו את שפת החשיבה של עולם התכנות, התנסינו בכלים ראשונים,
+                ובנינו את התשתית שעליה המשכנו לצמוח כקבוצה. כבר בשלב הזה גילינו שאנחנו לומדים הכי טוב ביחד.
+            </p>
+        </div>
+        <div class="timeline-item">
+            <span class="year-tag">שנה שנייה</span>
+            <h3>מלמידה לפרויקטים אמיתיים</h3>
+            <p>
+                המעבר המשמעותי: מתרגול ולמידה תיאורטית לפיתוח פרויקטים מעשיים מהתחלה ועד הסוף.
+                כל פרויקט לימד אותנו לא רק כלים טכניים חדשים, אלא גם איך לעבוד כצוות, לחלק משימות,
+                ולפתור בעיות בדרך מקורית כשהן צצות.
+            </p>
+        </div>
+        <div class="timeline-item">
+            <span class="year-tag">היום</span>
+            <h3>צוות פיתוח עם זהות משלו</h3>
+            <p>
+                היום אנחנו קבוצה שיודעת לקחת רעיון, לפרק אותו לשלבים, ולהוציא אותו אל הפועל —
+                תוך שמירה על למידה מתמדת, חדשנות והתמדה, בסביבה שמעודדת סקרנות ויוזמה.
+            </p>
+        </div>
+    </div>
+</section>
 
+<!-- ===== תחומי עיסוק ===== -->
+<section class="skills-section">
+    <h2 class="section-title">לא רק קוד</h2>
+    <div class="skills-grid">
+        <div class="skill-chip">
+            <div class="skill-title">פיתוח תוכנה</div>
+            <div class="skill-desc">בניית מוצרים מהרעיון ועד למוצר עובד</div>
+        </div>
+        <div class="skill-chip">
+            <div class="skill-title">עבודת צוות</div>
+            <div class="skill-desc">חלוקת תפקידים וניהול פרויקט משותף</div>
+        </div>
+        <div class="skill-chip">
+            <div class="skill-title">פתרון בעיות</div>
+            <div class="skill-desc">חשיבה יצירתית מול אתגרים טכניים</div>
+        </div>
+        <div class="skill-chip">
+            <div class="skill-title">חדשנות</div>
+            <div class="skill-desc">התנסות מתמדת בטכנולוגיות חדשות</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== גלריית תמונות ===== -->
+<section class="gallery-section">
+    <h2 class="section-title">רגעים מהדרך</h2>
+    <p class="section-intro">קצת מהרגעים שלנו לאורך השנתיים — מלמידה, דרך פיתוח, ועד הצגת התוצרים</p>
+
+    <div class="gallery-grid">
+        <figure>
+            <img src="/images/IMG_20241111_181246.jpg" alt="כך התחלנו">
+            <figcaption>כך התחלנו  </figcaption>
+        </figure>
+        <figure>
+            <img src="/images/IMG_20251106_180719.jpg" alt="פיתוח הפרויקט">
+            <figcaption>על הקוד</figcaption>
+        </figure>
+        <figure>
+            <img src="/images/IMG_20250116_184858.jpg" alt="היה לנו כיף">
+            <figcaption>היה לנו כיף..</figcaption>
+        </figure>
+    </div>
+</section>
+
+<!-- ===== שורת סיום ===== -->
+<p class="closing-line">
+    אנחנו מאמינים בלמידה משותפת, חדשנות והתמדה — ופועלים כל הזמן כדי להרחיב את היכולות שלנו
+    ולהתכונן לאתגרי העתיד בעולם הדיגיטלי המתפתח.
+</p>
 </body>
 </html>
